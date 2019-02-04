@@ -1,0 +1,7 @@
+# Ignore file
+
+# Build file
+build
+
+# Qt Creator files
+*.user
