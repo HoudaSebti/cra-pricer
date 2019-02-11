@@ -1,1 +1,1 @@
-add_executable(executable "executable.cpp")
+add_executable(pricer "pricer.cpp")
