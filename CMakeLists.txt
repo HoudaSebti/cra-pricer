@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(minipricer CXX)
+project(cra_pricer CXX)
 
 include(cmake/compilers.cmake)
 include(cmake/dependencies.cmake)

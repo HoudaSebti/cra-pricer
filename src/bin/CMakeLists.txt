@@ -1,1 +1,2 @@
 add_executable(pricer "pricer.cpp")
+target_link_libraries(pricer callable_range_accrual longstaff_schwartz_algorithm)
