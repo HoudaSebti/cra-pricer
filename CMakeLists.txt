@@ -10,3 +10,5 @@ include_directories(BEFORE "${PROJECT_SOURCE_DIR}/src/include")
 add_subdirectory(src/lib lib)
 
 add_subdirectory(src/bin bin)
+
+
