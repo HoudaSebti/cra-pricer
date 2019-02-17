@@ -8,10 +8,14 @@ int main() {
 
 
     CallableRangeAccrual cra(
+        ql::Date(14, ql::July, 2016),
+        ql::Date(14, ql::July, 2018),
+        ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
+        3,
+        6,
         ql::Rate(0.052),
         ql::Rate(0.04),
         ql::Rate(0.03)
     );
-    std::cout << "created the CRA variable";
-    return(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
