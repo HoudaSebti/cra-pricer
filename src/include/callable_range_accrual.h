@@ -3,10 +3,21 @@
 #include <definitions.h>
 #include <vector>
 
-class CallableRangeAccrual
-{
+
+std::vector<ql::Date> generateTenor(
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar,
+    int increment
+);
+
+
+class CallableRangeAccrual{
     public:
+        
         CallableRangeAccrual();
+        CallableRangeAccrual(CallableRangeAccrual const& other);
+        CallableRangeAccrual(CallableRangeAccrual && other);
         CallableRangeAccrual(
             ql::Date const& startDate,
             ql::Date const& endDate,
@@ -19,24 +30,17 @@ class CallableRangeAccrual
         );
         ~CallableRangeAccrual();
 
-        double computeFixedLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
-        double computeVarLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
+        friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual const& cra);
 
-        double computeActualizedCashFlow(ql::Date const &date);
-        double computeExerciseValue(ql::Date const &date);
-        double computeHoldValue(ql::Date const &date);
+        // double computeFixedLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
+        // double computeVarLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
 
-        double computeLSPrice();
+        // double computeActualizedCashFlow(ql::Date const &date);
+        // double computeExerciseValue(ql::Date const &date);
+        // double computeHoldValue(ql::Date const &date);
 
+        // double computeLSPrice();
     private:
-
-        std::vector<ql::Date> generateTenor(
-            ql::Date const& startDate,
-            ql::Date const& endDate,
-            ql::Calendar const& calendar,
-            int increment
-        );
-
         //contract specifications: rates
         ql::Rate payoff;
         ql::Rate maxRate;
@@ -46,3 +50,4 @@ class CallableRangeAccrual
         std::vector<ql::Date> fixedLegTenor;
         std::vector<ql::Date> varLegTenor;
 };
+

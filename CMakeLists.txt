@@ -13,4 +13,7 @@ add_subdirectory(src/lib lib)
 
 add_subdirectory(src/bin bin)
 
+add_subdirectory(src/tests tests)
+add_test(NAME test COMMAND tests --reporter compact)
+
 
