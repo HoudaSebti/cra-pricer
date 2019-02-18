@@ -33,6 +33,7 @@ TEST_CASE("operator << for callable range accruals", "operator << for cra"){
         "fixed increment: "    << 3 * 30 << "days" << '\n' <<
         "variable increment: " << 6 * 30 << "days";
 
-    REQUIRE(testStream.str().compare(expectedStream.str()) == 0
+    REQUIRE(
+        testStream.str().compare(expectedStream.str()) == 0
     );
 }
