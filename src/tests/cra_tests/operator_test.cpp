@@ -1,7 +1,7 @@
 #include<callable_range_accrual.h>
 #include<iostream>
 
-#include<catch.hpp>
+#include<catch2/catch.hpp>
 
 TEST_CASE("operator << for callable range accruals", "operator << for cra"){
 
