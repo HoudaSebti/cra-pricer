@@ -16,5 +16,5 @@ include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 list(APPEND LIBS ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 #Find Catch2
-include(cmake/modules/FindCatch2.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/modules/FindCatch2.cmake)
 enable_testing(true)

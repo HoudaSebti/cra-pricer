@@ -1,6 +1,5 @@
 file(GLOB_RECURSE TEST_SRC 
-        "${cra_pricer_SOURCE_DIR}/src/tests/cra_tests/*.cpp"
-
+        "${cra_pricer_SOURCE_DIR}/src/tests/*.cpp"
     )
     
 add_executable(tests ${TEST_SRC})

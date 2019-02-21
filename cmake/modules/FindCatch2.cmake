@@ -1,5 +1,5 @@
 
-if(NOT TARGET Catch)
+if(NOT TARGET Catch2)
     include(ExternalProject)
     if(IS_TRAVIS_BUILD)     # on travis, use git for fetching instead of wget
         set(GB_FETCH_EXTERNAL_CATCH
@@ -15,14 +15,14 @@ if(NOT TARGET Catch)
         )
     endif()
     ExternalProject_Add(libcatch
-        PREFIX ${CMAKE_BINARY_DIR}/external/Catch
+        PREFIX ${CMAKE_BINARY_DIR}/external/Catch2
         ${GB_FETCH_EXTERNAL_CATCH}
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/external/Catch/src/libcatch/single_include/catch2
-                                                           ${CMAKE_BINARY_DIR}/external/Catch/include/catch2
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/external/Catch2/src/libcatch/single_include/catch2
+                                                           ${CMAKE_BINARY_DIR}/external/Catch2/include/catch2
     )
     add_library(Catch2 INTERFACE)
     add_dependencies(Catch2 libcatch)
-    target_include_directories(Catch2 INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
+    target_include_directories(Catch2 INTERFACE ${CMAKE_BINARY_DIR}/external/Catch2/include)
 endif()
