@@ -3,9 +3,6 @@
 
 int main() {
     std::cout << "hello, this is a test main !";
-    ql::Date startDate(14, ql::July, 2016);
-    ql::Date endDate(14, ql::July, 2018);
-
 
     CallableRangeAccrual cra(
         ql::Date(14, ql::July, 2016),
