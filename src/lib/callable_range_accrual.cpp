@@ -7,42 +7,54 @@ std::vector<ql::Date> generateTenor(
     ql::Date const& startDate,
     ql::Date const& endDate,
     ql::Calendar const& calendar,
-    int increment
+    int const& increment
 ){
     
     std::vector<ql::Date> tenor = {{startDate}};
     tenor.reserve(daysBetween(startDate, endDate) / (increment * 30) + 2);
-    auto date = calendar.advance(tenor.back(), increment, ql::Months, ql::BusinessDayConvention::Preceding);
 
-    while(endDate - date > increment * 30)
-    {
+    auto date(tenor.back());
+    while (checkUpdate(endDate, date, calendar, increment))
         tenor.push_back(date);
-        date = calendar.advance(tenor.back(), increment, ql::Months, ql::BusinessDayConvention::Preceding);
-    }
     
     tenor.push_back(endDate);       
     return tenor;
 }
 
-void doSanityChecks(
-    ql::Date const& startDate,
-    ql::Date const& endDate,
+void checkLimitDates(
+    ql::Date const& date,
+    bool const& isStartDate,
     ql::Calendar const& calendar
 ){
-    if(! calendar.isBusinessDay(startDate))
-        throw std::invalid_argument("inserted start date is not a business day!");
-    if(! calendar.isBusinessDay(endDate))
-        throw std::invalid_argument("inserted end date is not a business day!");
+    
+    if(! calendar.isBusinessDay(date))
+    {
+        std::stringstream errorStream;
+        errorStream << "inserted "  << (isStartDate ? "start" : "end") << " date is not a business day!";
+        throw std::invalid_argument(errorStream.str());
+    }
 }
 
-
+bool checkUpdate(
+    ql::Date const& lhsDate,
+    ql::Date & rhsDate, 
+    ql::Calendar calendar,
+    int const& increment
+){
+    rhsDate = calendar.advance(rhsDate, increment, ql::Months, ql::BusinessDayConvention::Preceding);
+    if(lhsDate > rhsDate)
+        return true;
+    else
+        return false;
+    
+}
 CallableRangeAccrual::CallableRangeAccrual(){}
 CallableRangeAccrual::CallableRangeAccrual(CallableRangeAccrual const& other)
     : payoff (other.payoff),
       maxRate(other.maxRate),
       minRate(other.minRate),
       fixedLegTenor(other.fixedLegTenor),
-      varLegTenor  (other.varLegTenor)
+      varLegTenor(other.varLegTenor)
 {}
 CallableRangeAccrual::CallableRangeAccrual(CallableRangeAccrual && other)
     : payoff(std::move(other.payoff)),
@@ -61,33 +73,29 @@ CallableRangeAccrual::CallableRangeAccrual(
     ql::Rate const& maxRate_,
     ql::Rate const& minRate_
 )
-    try 
-        :   payoff(payoff_),
-            maxRate(maxRate_),
-            minRate(minRate_),
-            fixedLegTenor(
-                generateTenor(
-                    startDate,
-                    endDate,
-                    calendar,
-                    fixedIncrement
-                )
-           ),
-            varLegTenor(
-                generateTenor(
-                    startDate,
-                    endDate,
-                    calendar,
-                    varIncrement
-                )
-            )
-    {
-        doSanityChecks(startDate, endDate, calendar);
-    }
-    catch(std::invalid_argument const& e){
-
-    }
-
+    : payoff(payoff_),
+      maxRate(maxRate_),
+      minRate(minRate_)
+{
+    /*
+        Must check before initializing!
+    */
+    checkLimitDates(startDate, true, calendar);
+    checkLimitDates(endDate  , false, calendar);
+    
+    fixedLegTenor = generateTenor(
+        startDate,
+        endDate,
+        calendar,
+        fixedIncrement
+    );
+    varLegTenor = generateTenor(
+        startDate,
+        endDate,
+        calendar,
+        varIncrement
+    );
+}
       
 CallableRangeAccrual::~CallableRangeAccrual(){}
 

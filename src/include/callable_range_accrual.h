@@ -8,7 +8,20 @@ std::vector<ql::Date> generateTenor(
     ql::Date const& startDate,
     ql::Date const& endDate,
     ql::Calendar const& calendar,
-    int increment
+    int const& increment
+);
+
+void checkLimitDates(
+    ql::Date const& date,
+    bool const& isStartDate,
+    ql::Calendar const& calendar
+);
+
+bool checkUpdate(
+    ql::Date const& lhsDate,
+    ql::Date & rhsDate, 
+    ql::Calendar calendar,
+    int const& increment
 );
 
 
@@ -46,7 +59,7 @@ class CallableRangeAccrual{
         ql::Rate maxRate;
         ql::Rate minRate;
 
-        //tenor dates
+        // tenor dates
         std::vector<ql::Date> fixedLegTenor;
         std::vector<ql::Date> varLegTenor;
 };

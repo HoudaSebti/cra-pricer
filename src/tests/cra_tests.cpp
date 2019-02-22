@@ -38,8 +38,6 @@ TEST_CASE("cra constructor for open start and end dates"){
 
         
 
-    std::cout << testStream.str()     << std::endl;
-    std::cout << expectedStream.str() << std::endl;
     REQUIRE(
          testStream.str().compare(expectedStream.str()) == 0
     );
