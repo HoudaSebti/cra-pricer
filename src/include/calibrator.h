@@ -2,19 +2,21 @@
 
 #include<definitions.h>
 
-#include <ql/stochasticprocess.hpp>
 #include <ql/handle.hpp>
+#include <ql/legacy/libormarketmodels/lfmprocess.hpp>
+#include <ql/legacy/libormarketmodels/liborforwardmodel.hpp>
 #include <ql/termstructures/yieldtermstructure.hpp>
 
 
 // supported model names
-enum ModelName {
+enum ModelName{
     LiborMarketModel_Euribor6M,
     LiborMarketModel_Euribor1Y,
     HestonModel
 };
 
-ql::StochasticProcess & generateProcess(
+
+ql::CalibratedModel generateModel(
     ModelName const& modelName,
     boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
     ql::Date const& startDate,
@@ -22,10 +24,22 @@ ql::StochasticProcess & generateProcess(
     ql::Calendar const& calendar
 );
 
+ql::LiborForwardModelProcess generateLMMProcess(
+    ql::Period const& lmmMaturity,
+    boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar
+);
+
+ql::LiborForwardModel generateLmmModel(
+    ql::LiborForwardModelProcess process
+);
+
 ql::Size getProcessSize(
     ql::Date const& startDate,
     ql::Date const& endDate,
-    int const& liborDaysToMaturity  
+    int const& liborDaysToMaturity 
 );
 
 void calibrate(ql::CalibratedModel model, std::vector<std::istream> const& data);

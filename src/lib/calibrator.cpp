@@ -1,12 +1,12 @@
 #include<calibrator.h>
 
-#include <ql/legacy/libormarketmodels/lfmprocess.hpp>
-#include <ql/legacy/libormarketmodels/liborforwardmodel.hpp>
 #include <ql/indexes/ibor/euribor.hpp>
 #include <ql/time/daycounters/actual360.hpp>
+#include <ql/legacy/libormarketmodels/lmlinexpvolmodel.hpp>
+#include <ql/legacy/libormarketmodels/lmlinexpcorrmodel.hpp>
 
 
-ql::StochasticProcess & generateProcess(
+ql::CalibratedModel generateModel(
     ModelName const& modelName,
     boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
     ql::Date const& startDate,
@@ -15,19 +15,18 @@ ql::StochasticProcess & generateProcess(
 ){
     switch(modelName){
         case LiborMarketModel_Euribor6M:{
-             ql::LiborForwardModelProcess process(
-                getProcessSize(
+            return(
+                generateLmmModel(
+                    generateLMMProcess(
+                        ql::Period(6, ql::Months),
+                        termStructure,
                         startDate,
                         endDate,
-                        365 / 2
-                    ),
-                boost::shared_ptr<ql::Euribor6M>(
-                    new ql::Euribor6M(
-                        ql::Handle<ql::YieldTermStructure>(termStructure)
-                   ) 
-                )
+                        calendar
+                    )
+                )      
             );
-            return process;
+
         }
 
         case LiborMarketModel_Euribor1Y:{
@@ -53,6 +52,55 @@ ql::StochasticProcess & generateProcess(
 
 }
 
+ql::LiborForwardModelProcess generateLMMProcess(
+    ql::Period const& lmmMaturity,
+    boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar
+){
+    ql::LiborForwardModelProcess process(
+                getProcessSize(
+                        startDate,
+                        endDate,
+                        static_cast<int>(days(lmmMaturity))
+                    ),
+                boost::shared_ptr<ql::Euribor>(
+                    new ql::Euribor(
+                        lmmMaturity,
+                        ql::Handle<ql::YieldTermStructure>(termStructure)
+                    ) 
+                )
+            );
+            return process;
+}
+
+ql::LiborForwardModel generateLmmModel(
+    ql::LiborForwardModelProcess process
+){
+    return(
+                ql::LiborForwardModel(
+                    boost::shared_ptr<ql::LiborForwardModelProcess>(& process),
+                    boost::shared_ptr<ql::LmLinearExponentialVolatilityModel>(
+                        new ql::LmLinearExponentialVolatilityModel(
+                            process.fixingTimes(),
+                            .5,
+                            .6,
+                            .1,
+                            .1
+                        )
+                    ),
+                    boost::shared_ptr<ql::LmLinearExponentialCorrelationModel>(
+                        new ql::LmLinearExponentialCorrelationModel(
+                            process.size(),
+                            .5,
+                            .8
+                        )
+                    )    
+                )
+            );
+}
+
 ql::Size getProcessSize(
     ql::Date const& startDate,
     ql::Date const& endDate,
@@ -60,4 +108,3 @@ ql::Size getProcessSize(
 ){
     return static_cast<int>(daysBetween(startDate, endDate)) / liborDaysToMaturity;
 }
-
