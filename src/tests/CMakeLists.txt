@@ -3,4 +3,4 @@ file(GLOB_RECURSE TEST_SRC
     )
     
 add_executable(tests ${TEST_SRC})
-target_link_libraries(tests Catch2 cra algorithms)
+target_link_libraries(tests Catch2 cra algorithms calibrator)

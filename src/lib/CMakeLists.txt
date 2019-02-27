@@ -13,3 +13,11 @@ set(ALGORITHMS_SRC
 
 add_library(algorithms ${ALGORITHMS_SRC})
 target_link_libraries(algorithms ${LIBS})
+
+set(CALIBRATOR_SRC
+    "${cra_pricer_SOURCE_DIR}/src/lib/calibrator.cpp"
+    "${cra_pricer_SOURCE_DIR}/src/lib/termStructureGenerator.cpp"
+)
+
+add_library(calibrator ${CALIBRATOR_SRC})
+target_link_libraries(calibrator ${LIBS})
