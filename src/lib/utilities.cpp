@@ -1,6 +1,7 @@
-#include<termStructureGenerator.h>
+#include<utilities.h>
 
-ql::Handle<ql::ZeroCurve> generateZCTermStructure(
+
+ql::Handle<ql::ZeroCurve> generateZeroCurveTermStructure(
     ql::Date const& startDate,
     ql::Date const& endDate,
     ql::Rate const& fromRate,

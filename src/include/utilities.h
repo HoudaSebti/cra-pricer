@@ -3,10 +3,10 @@
 #include<definitions.h>
 
 #include <ql/handle.hpp>
-#include <ql/termstructures/yieldtermstructure.hpp>
 
 
-ql::Handle<ql::ZeroCurve> generateZCTermStructure(
+
+ql::Handle<ql::ZeroCurve> generateZeroCurveTermStructure(
     ql::Date const& startDate,
     ql::Date const& endDate,
     ql::Rate const& fromRate,
