@@ -14,42 +14,29 @@ ql::CalibratedModel generateModel(
     ql::Calendar const& calendar
 ){
     switch(modelName){
-        case LiborMarketModel_Euribor6M:{
-            return(
-                generateLmmModel(
-                    generateLMMProcess(
-                        ql::Period(6, ql::Months),
-                        termStructure,
-                        startDate,
-                        endDate,
-                        calendar
-                    )
-                )      
+        case LiborMarketModel_Euribor6M:
+            return generateLmmModel(
+                generateLMMProcess(
+                    ql::Period(6, ql::Months),
+                    termStructure,
+                    startDate,
+                    endDate,
+                    calendar
+                )
             );
-
-        }
-
-        case LiborMarketModel_Euribor1Y:{
-             std::runtime_error("process generator for LiborMarketModel_Euribor1Y not supported yet !");
-        }
-    
-        case HestonModel:{
-            std::runtime_error("process generator for HEstonModel not supported yet !");
-        }
-            
-            
-    // boost::shared_ptr<LmCorrelationModel> corrModel(
-    //                             new LmExponentialCorrelationModel(size, 0.5));
-
-    // boost::shared_ptr<LmVolatilityModel> volaModel(
-    //     new LmLinearExponentialVolatilityModel(process->fixingTimes(),
-    //                                            0.291, 1.483, 0.116, 0.00001));
-
-
-
-    //         break;
+        case LiborMarketModel_Euribor1Y:
+             return generateLmmModel(
+                generateLMMProcess(
+                    ql::Period(1, ql::Years),
+                    termStructure,
+                    startDate,
+                    endDate,
+                    calendar
+                )
+            );
+        case HestonModel:
+            std::runtime_error("process generator for HEstonModel not supported yet !");   
     }
-
 }
 
 ql::LiborForwardModelProcess generateLMMProcess(

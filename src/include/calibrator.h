@@ -43,4 +43,3 @@ ql::Size getProcessSize(
 );
 
 void calibrate(ql::CalibratedModel model, std::vector<std::istream> const& data);
-//void calibrateOtherModel(...)
