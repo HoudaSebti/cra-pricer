@@ -33,7 +33,11 @@ ql::LiborForwardModelProcess generateLMMProcess(
 );
 
 ql::LiborForwardModel generateLmmModel(
-    ql::LiborForwardModelProcess process
+    ql::LiborForwardModelProcess & process,
+    ql::Real a = .5,
+    ql::Real b = .6,
+    ql::Real c =.1,
+    ql::Real d =.1   
 );
 
 ql::Size getProcessSize(
@@ -42,4 +46,4 @@ ql::Size getProcessSize(
     int const& liborDaysToMaturity 
 );
 
-void calibrate(ql::CalibratedModel model, std::vector<std::istream> const& data);
+void calibrate(ql::CalibratedModel & model, std::vector<std::istream> const& data);

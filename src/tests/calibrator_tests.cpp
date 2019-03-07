@@ -19,7 +19,6 @@ TEST_CASE("daysBetween(startDate, endDate) modulus 365 is less than liborDaysToM
 }
 
 TEST_CASE("daysBetween(startDate, endDate) modulus 365 is greater than liborDaysToMaturity (3 months)"){
-
     ql::Size size(
         getProcessSize(
             ql::Date(14, ql::January, 2018),
@@ -30,4 +29,8 @@ TEST_CASE("daysBetween(startDate, endDate) modulus 365 is greater than liborDays
     REQUIRE(
          size == 5
     );
+}
+
+TEST_CASE("Ma myen maaan"){
+    
 }
