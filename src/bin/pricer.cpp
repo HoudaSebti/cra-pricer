@@ -8,7 +8,7 @@
 int main() {
     std::cout << "hello, this is a test main !";
 
-    CallableRangeAccrual cra(
+    CallableRangeAccrual<ql::Rate> cra(
         ql::Date(14, ql::June, 2016),
         ql::Date(14, ql::June, 2018),
         ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
@@ -25,7 +25,7 @@ int main() {
         ql::Rate(.04),
         ql::Rate(.08),
         ql::DayCounter(ql::Actual360())
-);
+    );
 
     return EXIT_SUCCESS;
 }

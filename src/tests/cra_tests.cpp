@@ -1,11 +1,14 @@
-#include<callable_range_accrual.h>
 #include<iostream>
 
 #include<catch2/catch.hpp>
 
+#include<callable_range_accrual.h>
+#include <callable_range_accrual_impl.ipp>
+
+
 TEST_CASE("cra constructor for open start and end dates"){
 
-    CallableRangeAccrual cra(
+    CallableRangeAccrual<ql::Rate> cra(
         ql::Date(14, ql::June, 2016),
         ql::Date(14, ql::June, 2018),
         ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
@@ -26,9 +29,9 @@ TEST_CASE("cra constructor for open start and end dates"){
         "start date: "             << ql::Date(14, ql::June, 2016) << std::endl <<
         "end date: "               << ql::Date(14, ql::June, 2018) << std::endl <<
 
-        "max rate of the range : " << ql::Rate(0.04)  << std::endl <<
-        "min rate of the range : " << ql::Rate(0.03)  << std::endl <<
-        "payoff: "                 << ql::Rate(0.052) << std::endl <<
+        "max range of the range : " << ql::Rate(0.04)  << std::endl <<
+        "min range of the range : " << ql::Rate(0.03)  << std::endl <<
+        "payoff: "                  << ql::Rate(0.052) << std::endl <<
 
         "cra.fixedLegTenor[1]= "   << ql::Date(14, ql::September, 2016) << std::endl <<
         "cra.varLegTenor  [1]= "   << ql::Date(14, ql::December, 2016 ) << std::endl <<
@@ -46,7 +49,7 @@ TEST_CASE("cra constructor for open start and end dates"){
  TEST_CASE("cra constructor for closed start date"){
 
     REQUIRE_THROWS(
-        CallableRangeAccrual(
+        CallableRangeAccrual<ql::Rate>(
             ql::Date(17, ql::January, 2016),
             ql::Date(17, ql::January, 2018),
             ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
@@ -63,7 +66,7 @@ TEST_CASE("cra constructor for open start and end dates"){
       
 
     REQUIRE_THROWS(
-        CallableRangeAccrual(
+        CallableRangeAccrual<ql::Rate>(
             ql::Date(15, ql::January, 2016),
             ql::Date(21, ql::January, 2018),
             ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
