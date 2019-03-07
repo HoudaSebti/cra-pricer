@@ -14,8 +14,8 @@ ql::Handle<ql::ZeroCurve> generateZeroCurveTermStructure(
             new ql::ZeroCurve(
                 std::vector<ql::Date>{{startDate, endDate}},
                 std::vector<ql::Rate>{{fromRate, toRate}},
-                dayCounter 
-            )        
+                dayCounter
+            )
         )
     );
 }
