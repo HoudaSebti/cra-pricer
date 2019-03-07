@@ -4,63 +4,84 @@
 #include <vector>
 
 
-std::vector<ql::Date> generateTenor(
-    ql::Date const& startDate,
-    ql::Date const& endDate,
-    ql::Calendar const& calendar,
-    int const& increment
-);
-
-void checkLimitDates(
-    ql::Date const& date,
-    bool const& isStartDate,
-    ql::Calendar const& calendar
-);
-
 bool checkUpdate(
     ql::Date const& lhsDate,
     ql::Date & rhsDate, 
     ql::Calendar calendar,
     int const& increment
-);
+){
+    rhsDate = calendar.advance(rhsDate, increment, ql::Months, ql::BusinessDayConvention::Preceding);
+    if(lhsDate > rhsDate)
+        return true;
+    else
+        return false;
+    
+}
 
+std::vector<ql::Date> generateTenor(
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar,
+    int const& increment
+){
+    
+    std::vector<ql::Date> tenor = {{startDate}};
+    tenor.reserve(daysBetween(startDate, endDate) / (increment * 30) + 2);
 
+    auto date(tenor.back());
+    while (checkUpdate(endDate, date, calendar, increment))
+        tenor.push_back(date);
+    
+    tenor.push_back(endDate);       
+    return tenor;
+}
+
+void checkLimitDates(
+    ql::Date const& date,
+    bool const& isStartDate,
+    ql::Calendar const& calendar
+){
+    
+    if(! calendar.isBusinessDay(date))
+    {
+        std::stringstream errorStream;
+        errorStream << "inserted "  << (isStartDate ? "start" : "end") << " date is not a business day!";
+        throw std::invalid_argument(errorStream.str());
+    }
+}
+
+template <typename Underlying_type>
 class CallableRangeAccrual{
     public:
         
-        CallableRangeAccrual();
-        CallableRangeAccrual(CallableRangeAccrual const& other);
-        CallableRangeAccrual(CallableRangeAccrual && other);
-        CallableRangeAccrual(
+        CallableRangeAccrual<Underlying_type>();
+        CallableRangeAccrual<Underlying_type>(CallableRangeAccrual const& other);
+        CallableRangeAccrual<Underlying_type>(CallableRangeAccrual && other);
+        CallableRangeAccrual<Underlying_type>(
             ql::Date const& startDate,
             ql::Date const& endDate,
             ql::Calendar const& calendar,
             int fixedIncrement,
             int varIncrement,
             ql::Rate const& payoff_,
-            ql::Rate const& maxRate_,
-            ql::Rate const& minRate_
+            Underlying_type const& rangeMax_,
+            Underlying_type const& rangeMin_
         );
+            
         ~CallableRangeAccrual();
 
-        friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual const& cra);
+        template <typename TT>
+        friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
 
-        // double computeFixedLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
-        // double computeVarLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
-
-        // double computeActualizedCashFlow(ql::Date const &date);
-        // double computeExerciseValue(ql::Date const &date);
-        // double computeHoldValue(ql::Date const &date);
-
-        // double computeLSPrice();
     private:
-        //contract specifications: rates
+        //contract specifications
         ql::Rate payoff;
-        ql::Rate maxRate;
-        ql::Rate minRate;
+        Underlying_type rangeMax;
+        Underlying_type rangeMin;
 
         // tenor dates
         std::vector<ql::Date> fixedLegTenor;
         std::vector<ql::Date> varLegTenor;
 };
 
+#include <callable_range_accrual_impl.ipp>
