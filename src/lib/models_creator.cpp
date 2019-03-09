@@ -1,4 +1,4 @@
-#include<calibrator.h>
+#include<models_creator.h>
 
 #include <ql/indexes/ibor/euribor.hpp>
 #include <ql/time/daycounters/actual360.hpp>
@@ -7,7 +7,7 @@
 
 
 ql::CalibratedModel generateModel(
-    ModelName const& modelName,
+    RateModelName const& modelName,
     boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
     ql::Date const& startDate,
     ql::Date const& endDate,

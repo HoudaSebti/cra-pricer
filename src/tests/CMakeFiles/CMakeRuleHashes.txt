@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+f127e59d2b0dd39d73473c41fcdc492e CMakeFiles/libcatch
+6afd1e6627d2bedffc17aeae37b32a2f CMakeFiles/libcatch-complete
+b15723446923f6a9454232ca0ed4f8e3 external/Catch2/src/libcatch-stamp/libcatch-build
+dc0a66a29c9c39b39004e9d6c46d1a18 external/Catch2/src/libcatch-stamp/libcatch-configure
+b5e5c7f0bcf575d4e368e5ef74aaef01 external/Catch2/src/libcatch-stamp/libcatch-download
+886b4b3eabc86ba13473eb877329c1cf external/Catch2/src/libcatch-stamp/libcatch-install
+c969a520d14d93c6206f90b77862d1a8 external/Catch2/src/libcatch-stamp/libcatch-mkdir
+af06e8779cd344a090ec221282cc444f external/Catch2/src/libcatch-stamp/libcatch-patch
+64edbff9acdc0816b20f91d4ed5da371 external/Catch2/src/libcatch-stamp/libcatch-update

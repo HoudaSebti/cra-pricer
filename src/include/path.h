@@ -3,11 +3,4 @@
 #include<definitions.h>
 
 template <typename Underlying_type>
-class Path{
-    public:
-        Path();
-        ~Path();
-
-    private:
-        std::vector<Underlying_type> rates;
-}
+ std::vector<Underlying_type> generatePath(modelName modelName, int size);

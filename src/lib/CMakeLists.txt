@@ -7,10 +7,10 @@ add_library(algorithms ${ALGORITHMS_SRC})
 target_link_libraries(algorithms ${LIBS})
 
 # Calibrator
-set(CALIBRATOR_SRC
-    "${cra_pricer_SOURCE_DIR}/src/lib/calibrator.cpp"
+set(MODELS_CREATOR_SRC
+    "${cra_pricer_SOURCE_DIR}/src/lib/models_creator.cpp"
     "${cra_pricer_SOURCE_DIR}/src/lib/utilities.cpp"
 )
 
-add_library(calibrator ${CALIBRATOR_SRC})
-target_link_libraries(calibrator ${LIBS})
+add_library(models_creator ${MODELS_CREATOR_SRC})
+target_link_libraries(models_creator ${LIBS})

@@ -8,8 +8,8 @@
 #include <ql/termstructures/yieldtermstructure.hpp>
 
 
-// supported model names
-enum ModelName{
+// supported rate model names
+enum RateModelName{
     LiborMarketModel_Euribor6M,
     LiborMarketModel_Euribor1Y,
     HestonModel
@@ -17,7 +17,7 @@ enum ModelName{
 
 
 ql::CalibratedModel generateModel(
-    ModelName const& modelName,
+    RateModelName const& modelName,
     boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
     ql::Date const& startDate,
     ql::Date const& endDate,
