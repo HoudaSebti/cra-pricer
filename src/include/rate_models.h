@@ -1,6 +1,7 @@
 #pragma<once>
 
 #include<definitions.h>
+#include<rate_models.h>
 
 #include <ql/handle.hpp>
 #include <ql/legacy/libormarketmodels/lfmprocess.hpp>
@@ -13,14 +14,6 @@ enum RateModelName{
     LiborMarketModel_Euribor1Y,
     HestonModel
 };
-
-ql::CalibratedModel generateRateModel(
-    RateModelName const& modelName,
-    boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
-    ql::Date const& startDate,
-    ql::Date const& endDate,
-    ql::Calendar const& calendar
-);
 
 ql::LiborForwardModelProcess generateLMMProcess(
     ql::Period const& lmmMaturity,
@@ -44,3 +37,13 @@ ql::Size getProcessSize(
     int const& liborDaysToMaturity 
 );
 
+class Rate_models : public Models_creator{
+    public:
+        Rate_models(RateModelName const& modelName,
+            boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            ql::Calendar const& calendar);
+        ~RateModels();
+    
+};
