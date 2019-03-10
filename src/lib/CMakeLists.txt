@@ -8,7 +8,8 @@ target_link_libraries(algorithms ${LIBS})
 
 # Calibrator
 set(MODELS_CREATOR_SRC
-    "${cra_pricer_SOURCE_DIR}/src/lib/models_creator.cpp"
+    "${cra_pricer_SOURCE_DIR}/src/lib/rate_models.cpp"
+    "${cra_pricer_SOURCE_DIR}/src/lib/black_scholes.cpp"
     "${cra_pricer_SOURCE_DIR}/src/lib/utilities.cpp"
 )
 

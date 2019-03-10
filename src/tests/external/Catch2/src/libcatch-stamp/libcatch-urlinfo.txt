@@ -1,3 +1,0 @@
-repository='external project URL'
-module='https://github.com/catchorg/Catch2/archive/v2.6.1.tar.gz'
-tag=''
