@@ -6,7 +6,7 @@ set(ALGORITHMS_SRC
 add_library(algorithms ${ALGORITHMS_SRC})
 target_link_libraries(algorithms ${LIBS})
 
-# Calibrator
+# Models
 set(MODELS_CREATOR_SRC
     "${cra_pricer_SOURCE_DIR}/src/lib/rate_models.cpp"
     "${cra_pricer_SOURCE_DIR}/src/lib/black_scholes.cpp"
