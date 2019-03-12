@@ -1,4 +1,5 @@
 #include<rate_models.h>
+#include<dummy_model.h>
 #include<black_scholes.h>
 #include<iostream>
 
@@ -32,6 +33,7 @@ TEST_CASE("daysBetween(startDate, endDate) modulus 365 is greater than liborDays
     );
 }
 
-TEST_CASE("Ma myen maaan"){
+TEST_CASE("creating a dummy model"){
+    DummyModel dummyModel();
     
 }
