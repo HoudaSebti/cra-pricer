@@ -8,6 +8,6 @@ class DummyModel : Models<double>{
         DummyModel();
         ~DummyModel();
     private:
-        double computeValue(ql::Date date) const override;
+        double simulateValue(int daysFromStartDate) const override;
         void calibrate(std::vector<std::istream> const& data) override;
 };

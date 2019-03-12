@@ -103,7 +103,7 @@ RateModels::RateModels(RateModelName const& modelName,
     }
 RateModels::~RateModels(){}
 
-ql::Rate RateModels::computeValue(ql::Date date) const{
+ql::Rate RateModels::simulateValue(int timeFromStart) const{
     std::runtime_error(" not supported yet !");
     }
 void RateModels::calibrate(std::vector<std::istream> const& data){
