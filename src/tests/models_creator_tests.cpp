@@ -34,6 +34,10 @@ TEST_CASE("daysBetween(startDate, endDate) modulus 365 is greater than liborDays
 }
 
 TEST_CASE("creating a dummy model"){
-    DummyModel dummyModel();
-    
+    DummyModel dummyModel();   
+}
+
+TEST_CASE("Black Scholes simulation for t = 0"){
+    BlackScholes blackscholesModel(100.0, .15, .2);
+     blackscholesModel.simulateValue
 }
