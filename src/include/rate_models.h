@@ -46,7 +46,6 @@ class RateModels : Models<ql::Rate>{
             ql::Date const& endDate,
             ql::Calendar const& calendar);
         ~RateModels();
-    private:
         ql::Rate simulateValue(int daysFromStart) const override;
         void calibrate(std::vector<std::istream> const& data) override;
 
