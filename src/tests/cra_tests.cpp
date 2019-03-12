@@ -15,6 +15,7 @@ TEST_CASE("cra constructor for open start and end dates"){
         3,
         6,
         ql::Rate(0.052),
+        ql::Rate(0.03),
         ql::Rate(0.04),
         ql::Rate(0.03)
     );
@@ -31,8 +32,9 @@ TEST_CASE("cra constructor for open start and end dates"){
 
         "max range of the range : " << ql::Rate(0.04)  << std::endl <<
         "min range of the range : " << ql::Rate(0.03)  << std::endl <<
-        "payoff: "                  << ql::Rate(0.052) << std::endl <<
 
+        "payoff: "                 << ql::Rate(0.052) << std::endl <<
+        "fixed rate: "             << ql::Rate(0.03)  << std::endl <<
         "cra.fixedLegTenor[1]= "   << ql::Date(14, ql::September, 2016) << std::endl <<
         "cra.varLegTenor  [1]= "   << ql::Date(14, ql::December, 2016 ) << std::endl <<
 
@@ -56,6 +58,7 @@ TEST_CASE("cra constructor for open start and end dates"){
             3,
             6,
             ql::Rate(0.052),
+            ql::Rate(0.03),
             ql::Rate(0.04),
             ql::Rate(0.03)
         )
@@ -73,6 +76,7 @@ TEST_CASE("cra constructor for open start and end dates"){
             3,
             6,
             ql::Rate(0.052),
+            ql::Rate(0.03),
             ql::Rate(0.04),
             ql::Rate(0.03)
         )

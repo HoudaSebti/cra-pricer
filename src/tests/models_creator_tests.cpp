@@ -38,6 +38,9 @@ TEST_CASE("creating a dummy model"){
 }
 
 TEST_CASE("Black Scholes simulation for t = 0"){
-    BlackScholes blackscholesModel(100.0, .15, .2);
-     blackscholesModel.simulateValue
+    BlackScholes blackScholesModel(100.0, .15, .2);
+    auto S0(blackScholesModel.simulateValue(0));
+    REQUIRE(
+         S0 == 100.0
+    );
 }

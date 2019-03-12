@@ -6,6 +6,7 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(){}
 template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual const& other)
     : payoff (other.payoff),
+    fixedRate(other.fixedRate),
     rangeMax(other.rangeMax),
     rangeMin(other.rangeMin),
     fixedLegTenor(other.fixedLegTenor),
@@ -15,6 +16,7 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual
 template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual && other)
     : payoff(std::move(other.payoff)),
+    fixedRate(std::move(other.fixedRate)),
     rangeMax(std::move(other.rangeMax)),
     rangeMin(std::move(other.rangeMin)),
     fixedLegTenor(std::move(other.fixedLegTenor)),
@@ -29,10 +31,12 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
     int fixedIncrement,
     int varIncrement,
     ql::Rate const& payoff_,
+    ql::Rate const& fixedRate_,
     Underlying_type const& rangeMax_,
     Underlying_type const& rangeMin_
 )
     : payoff(payoff_),
+    fixedRate(fixedRate_),
     rangeMax(rangeMax_),
     rangeMin(rangeMin_)
 {
@@ -69,7 +73,8 @@ std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& 
     "max range of the range : " << cra.rangeMax << std::endl <<
     "min range of the range : " << cra.rangeMin << std::endl <<
 
-    "payoff: "                 << cra.payoff  << std::endl <<
+    "payoff: "                 << cra.payoff     << std::endl <<
+    "fixed rate: "             << cra.fixedRate  << std::endl <<
     "cra.fixedLegTenor[1]= "   << cra.fixedLegTenor[1] << std::endl <<
     "cra.varLegTenor  [1]= "   << cra.varLegTenor  [1] << std::endl <<
 

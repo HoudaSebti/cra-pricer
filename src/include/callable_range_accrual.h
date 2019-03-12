@@ -64,6 +64,7 @@ class CallableRangeAccrual{
             int fixedIncrement,
             int varIncrement,
             ql::Rate const& payoff_,
+            ql::Rate const& fixedRate_,
             Underlying_type const& rangeMax_,
             Underlying_type const& rangeMin_
         );
@@ -76,6 +77,7 @@ class CallableRangeAccrual{
     private:
         //contract specifications
         ql::Rate payoff;
+        ql::Rate fixedRate;
         Underlying_type rangeMax;
         Underlying_type rangeMin;
 
