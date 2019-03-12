@@ -1,13 +1,10 @@
 #include<rate_models.h>
 
 #include <ql/indexes/ibor/euribor.hpp>
-#include <ql/time/daycounters/actual360.hpp>
 #include <ql/legacy/libormarketmodels/lmlinexpvolmodel.hpp>
 #include <ql/legacy/libormarketmodels/lmlinexpcorrmodel.hpp>
 
 
-
-// No need for this function
 ql::LiborForwardModelProcess generateLMMProcess(
     ql::Period const& lmmMaturity,
     boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
@@ -80,6 +77,16 @@ RateModels::RateModels(RateModelName const& modelName,
                 );
                 generateLmmModel(process);
             }
+            case LiborMarketModel_Euribor3M:{
+                auto process = generateLMMProcess(
+                    ql::Period(3, ql::Months),
+                    termStructure,
+                    startDate,
+                    endDate,
+                    calendar
+                );
+                generateLmmModel(process);
+            }
             case LiborMarketModel_Euribor1Y:{
                 auto process = generateLMMProcess(
                     ql::Period(1, ql::Years),
@@ -97,7 +104,8 @@ RateModels::RateModels(RateModelName const& modelName,
 RateModels::~RateModels(){}
 
 ql::Rate RateModels::computeValue(ql::Date date) const{
-        return ql::Rate(0.0);
+    std::runtime_error(" not supported yet !");
     }
 void RateModels::calibrate(std::vector<std::istream> const& data){
+    std::runtime_error("process generator for HestonModel not supported yet !");
     }
