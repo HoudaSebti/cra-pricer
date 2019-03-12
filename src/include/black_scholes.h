@@ -10,10 +10,9 @@ class BlackScholes : Models<double>{
     public:
         BlackScholes(double S0_, double mu_, double sigma_);
         ~BlackScholes();
-
-    private:
         double simulateValue(int daysFromStart) const override;
         void calibrate(std::vector<std::istream> const& data) override;
+    private:
         double S0;
         double mu;
         double sigma; 
