@@ -10,6 +10,7 @@
 
 // supported rate model names
 enum RateModelName{
+    LiborMarketModel_Euribor3M,
     LiborMarketModel_Euribor6M,
     LiborMarketModel_Euribor1Y,
     HestonModel
