@@ -1,4 +1,5 @@
-#include<models_creator.h>
+#include<rate_models.h>
+#include<black_scholes.h>
 #include<iostream>
 
 #include<catch2/catch.hpp>

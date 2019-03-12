@@ -16,11 +16,7 @@ ql::LiborForwardModelProcess generateLMMProcess(
     ql::Calendar const& calendar
 ){
     ql::LiborForwardModelProcess process(
-                getProcessSize(
-                        startDate,
-                        endDate,
-                        static_cast<int>(days(lmmMaturity))
-                    ),
+                1,
                 boost::shared_ptr<ql::Euribor>(
                     new ql::Euribor(
                         lmmMaturity,
@@ -67,48 +63,41 @@ ql::Size getProcessSize(
     return static_cast<int>(daysBetween(startDate, endDate)) / liborDaysToMaturity;
 }
 
-class Rate_models : public Models_creator{
-    public:
-        Rate_models(RateModelName const& modelName,
-            boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
-            ql::Date const& startDate,
-            ql::Date const& endDate,
-            ql::Calendar const& calendar){
-            switch(modelName){
-                case LiborMarketModel_Euribor6M:{
-                    auto process = generateLMMProcess(
-                        ql::Period(6, ql::Months),
-                        termStructure,
-                        startDate,
-                        endDate,
-                        calendar
-                    );
-                    return generateLmmModel(process);
-                }
-                case LiborMarketModel_Euribor1Y:{
-                    auto process = generateLMMProcess(
-                        ql::Period(1, ql::Months),
-                        termStructure,
-                        startDate,
-                        endDate,
-                        calendar
-                    );
-                    return generateLmmModel(process);
-                }
-                case HestonModel:
-                    std::runtime_error("process generator for HEstonModel not supported yet !");   
+
+RateModels::RateModels(RateModelName const& modelName,
+    boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar){
+        switch(modelName){
+            case LiborMarketModel_Euribor6M:{
+                auto process = generateLMMProcess(
+                    ql::Period(6, ql::Months),
+                    termStructure,
+                    startDate,
+                    endDate,
+                    calendar
+                );
+                generateLmmModel(process);
             }
-        ~Rate_models();
-    private:
-        virtual ql::Rate computeValue(ql::Date date){
-
-            return ql::Rate(.05);
+            case LiborMarketModel_Euribor1Y:{
+                auto process = generateLMMProcess(
+                    ql::Period(1, ql::Years),
+                    termStructure,
+                    startDate,
+                    endDate,
+                    calendar
+                );
+                generateLmmModel(process);
+            }
+            case HestonModel:
+                std::runtime_error("process generator for HestonModel not supported yet !");   
         }
-        virtual void calibrate(std::vector<std::istream> const& data){
+    }
+RateModels::~RateModels(){}
 
-        }
-
-        
-};
-
-
+ql::Rate RateModels::computeValue(ql::Date date) const{
+        return ql::Rate(0.0);
+    }
+void RateModels::calibrate(std::vector<std::istream> const& data){
+    }

@@ -72,5 +72,6 @@
         "stack": "cpp",
         "variant": "cpp",
         "*.ipp": "cpp"
-    }
+    },
+    "C_Cpp.configurationWarnings": "Disabled"
 }

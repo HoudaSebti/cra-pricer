@@ -78,10 +78,3 @@ std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& 
     return oStream;
 }
 
-// double computeFixedLegCoupons(ql::Date const &fromDate, ql::Date const &toDate);
-// double computeVarLegCoupons(ql::Date const &fromDate, ql::Date const &toDate)
-// double computeActualizedCashFlow(ql::Date const &date);
-// double computeExerciseValue(ql::Date const &date);
-// double computeHoldValue(ql::Date const &date)
-// double computeLSPrice();
-

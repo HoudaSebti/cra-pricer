@@ -1,7 +1,7 @@
-#pragma<once>
+#pragma once
 
 #include<definitions.h>
-#include<rate_models.h>
+#include<models.h>
 
 #include <ql/handle.hpp>
 #include <ql/legacy/libormarketmodels/lfmprocess.hpp>
@@ -37,13 +37,16 @@ ql::Size getProcessSize(
     int const& liborDaysToMaturity 
 );
 
-class Rate_models : public Models_creator{
+class RateModels : Models<ql::Rate>{
     public:
-        Rate_models(RateModelName const& modelName,
+        RateModels(RateModelName const& modelName,
             boost::shared_ptr<ql::YieldTermStructure> const& termStructure,
             ql::Date const& startDate,
             ql::Date const& endDate,
             ql::Calendar const& calendar);
         ~RateModels();
-    
+    private:
+        ql::Rate computeValue(ql::Date date) const override;
+        void calibrate(std::vector<std::istream> const& data) override;
+
 };
