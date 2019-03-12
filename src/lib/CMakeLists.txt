@@ -10,6 +10,7 @@ target_link_libraries(algorithms ${LIBS})
 set(MODELS_CREATOR_SRC
     "${cra_pricer_SOURCE_DIR}/src/lib/rate_models.cpp"
     "${cra_pricer_SOURCE_DIR}/src/lib/black_scholes.cpp"
+    "${cra_pricer_SOURCE_DIR}/src/lib/dummy_model.cpp"
     "${cra_pricer_SOURCE_DIR}/src/lib/utilities.cpp"
 )
 
