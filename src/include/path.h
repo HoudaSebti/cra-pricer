@@ -6,8 +6,14 @@
 template <typename Underlying_type>
 class Path{
     public:
-        Path(ql::Date const& startDate, ql::Date const& endDate, ql::Calendar const& calendar);
-        ~Path();
+        Path<Underlying_type>(
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            ql::Calendar const& calendar
+        );
+        Path<Underlying_type>(Path const& other);
+        Path<Underlying_type>(Path && other);
+        ~Path<Underlying_type>();
         double computeCashFlow(
             ql::Rate const& payoff,
             Underlying_type const& rangeMax,

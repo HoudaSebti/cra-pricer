@@ -9,6 +9,16 @@ Path<Underlying_type>::Path(
         elements.reserve(calendar.businessDaysBetween(startDate, endDate));
 }
 
+template<typename Underlying_type>
+Path<Underlying_type>::Path(Path const& other):
+    elements(other.elements)
+{}
+
+template<typename Underlying_type>
+Path<Underlying_type>::Path(Path && other):
+    elements(std::move(other.elements))
+{}
+
 template <typename Underlying_type>
 Path<Underlying_type>::~Path(){};
 
