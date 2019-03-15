@@ -106,6 +106,21 @@ RateModels::~RateModels(){}
 ql::Rate RateModels::simulateValue(int timeFromStart) const{
     std::runtime_error(" not supported yet !");
     }
+Path<ql::Rate> RateModels::generatePath(
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar
+) const{
+    Path<ql::Rate> path(
+       startDate,
+       endDate,
+       calendar
+    );
+    for(auto t = 0; t < path.getSize(); ++t)
+        path.addElement(RateModels::simulateValue(t));
+    return path;
+}
+
 void RateModels::calibrate(std::vector<std::istream> const& data){
     std::runtime_error("process generator for HestonModel not supported yet !");
     }

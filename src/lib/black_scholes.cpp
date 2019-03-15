@@ -19,6 +19,21 @@ double BlackScholes::simulateValue(int daysFromStart) const {
     auto wienerValue = simulateWienerProcess(0.0, daysFromStart);
     return(S0 * exp((mu - pow(sigma,2)) * daysFromStart + sigma * wienerValue));
 }
+
+Path<double> BlackScholes::generatePath(
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    ql::Calendar const& calendar
+) const{
+    Path<double> path(
+        startDate,
+        endDate,
+        calendar
+    );
+    for(auto t = 0; t < path.getSize(); ++t)
+        path.addElement(BlackScholes::simulateValue(t));
+    return path;
+}
 void BlackScholes::calibrate(std::vector<std::istream> const& data){
 
 }

@@ -47,6 +47,11 @@ class RateModels : Models<ql::Rate>{
             ql::Calendar const& calendar);
         ~RateModels();
         ql::Rate simulateValue(int daysFromStart) const override;
+        Path<ql::Rate> generatePath(
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            ql::Calendar const& calendar
+        ) const override;
         void calibrate(std::vector<std::istream> const& data) override;
 
 };
