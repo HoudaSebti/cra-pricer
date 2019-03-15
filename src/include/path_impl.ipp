@@ -6,7 +6,7 @@ Path<Underlying_type>::Path(
     ql::Date const& startDate,
     ql::Date const& endDate,
     ql::Calendar const& calendar){
-        elements(calendar.businessDaysBetween(startDate, endDate));
+        elements.reserve(calendar.businessDaysBetween(startDate, endDate));
 }
 
 template <typename Underlying_type>

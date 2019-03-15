@@ -41,6 +41,20 @@ TEST_CASE("Black Scholes simulation for t = 0"){
     BlackScholes blackScholesModel(100.0, .15, .2);
     auto S0(blackScholesModel.simulateValue(0));
     REQUIRE(
-         S0 == 100.0
+        S0 == 100.0
     );
+}
+
+TEST_CASE("Black Scholes simulation for sigma = 0"){
+    BlackScholes blackScholesModel(100.0, .15, .0);
+    
+    for(int t = 0; t < 100; ++t)
+    {
+        auto S_t(blackScholesModel.simulateValue(t));
+        REQUIRE(
+            S_t == 100.0 * exp(.15 * t)
+        );
+    }
+        
+    
 }
