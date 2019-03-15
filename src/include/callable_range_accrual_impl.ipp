@@ -1,5 +1,6 @@
 #pragma once
 
+
 template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(){}
 
