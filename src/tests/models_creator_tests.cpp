@@ -73,3 +73,18 @@ TEST_CASE(" Black scholes expectancy check"){
     );
     
 }
+
+TEST_CASE("generate path with dummy model"){
+    DummyModel dummyModel = DummyModel();
+    
+    auto path(
+        dummyModel.generatePath(
+            ql::Date(14, ql::January, 2018),
+            ql::Date(14, ql::February, 2019),
+            ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
+        )
+    );
+    for(int i = 0; i < path.getSize(); ++i){
+        REQUIRE(path.getElement(i) == 0.0);
+    }
+}
