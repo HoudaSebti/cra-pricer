@@ -69,7 +69,7 @@ class CallableRangeAccrual{
             Underlying_type const& rangeMin_
         );
             
-        ~CallableRangeAccrual();
+        ~CallableRangeAccrual<Underlying_type>();
 
         template <typename TT>
         friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
