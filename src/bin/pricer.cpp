@@ -14,6 +14,7 @@ int main() {
         ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
         3,
         6,
+        6,
         ql::Rate(0.052),
         ql::Rate(0.03),
         ql::Rate(0.04),

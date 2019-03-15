@@ -1,7 +1,6 @@
 #pragma once
 
 #include <definitions.h>
-#include <vector>
 
 
 bool checkUpdate(
@@ -63,6 +62,7 @@ class CallableRangeAccrual{
             ql::Calendar const& calendar,
             int fixedIncrement,
             int varIncrement,
+            int callIncrement,
             ql::Rate const& payoff_,
             ql::Rate const& fixedRate_,
             Underlying_type const& rangeMax_,
@@ -74,7 +74,6 @@ class CallableRangeAccrual{
         template <typename TT>
         friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
 
-    private:
         //contract specifications
         ql::Rate payoff;
         ql::Rate fixedRate;
@@ -84,6 +83,7 @@ class CallableRangeAccrual{
         // tenor dates
         std::vector<ql::Date> fixedLegTenor;
         std::vector<ql::Date> varLegTenor;
+        std::vector<ql::Date> callTenor;
 };
 
 #include <callable_range_accrual_impl.ipp>

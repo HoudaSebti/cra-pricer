@@ -11,7 +11,8 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual
     rangeMax(other.rangeMax),
     rangeMin(other.rangeMin),
     fixedLegTenor(other.fixedLegTenor),
-    varLegTenor(other.varLegTenor)
+    varLegTenor(other.varLegTenor),
+    callTenor(other.callTenor)
 {}
 
 template <typename Underlying_type>
@@ -21,7 +22,8 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual
     rangeMax(std::move(other.rangeMax)),
     rangeMin(std::move(other.rangeMin)),
     fixedLegTenor(std::move(other.fixedLegTenor)),
-    varLegTenor(std::move(other.varLegTenor))
+    varLegTenor(std::move(other.varLegTenor)),
+    callTenor(std::move(other.callTenor))
 {}
 
 template <typename Underlying_type>
@@ -31,6 +33,7 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
     ql::Calendar const& calendar,
     int fixedIncrement,
     int varIncrement,
+    int callIncrement,
     ql::Rate const& payoff_,
     ql::Rate const& fixedRate_,
     Underlying_type const& rangeMax_,
@@ -57,6 +60,12 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
         endDate,
         calendar,
         varIncrement
+    );
+    callTenor = generateTenor(
+        startDate,
+        endDate,
+        calendar,
+        callIncrement
     );
 }
 
