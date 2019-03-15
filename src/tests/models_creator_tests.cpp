@@ -1,6 +1,8 @@
 #include<rate_models.h>
 #include<dummy_model.h>
 #include<black_scholes.h>
+
+#include <math.h>
 #include<iostream>
 
 #include<catch2/catch.hpp>
@@ -52,9 +54,22 @@ TEST_CASE("Black Scholes simulation for sigma = 0"){
     {
         auto S_t(blackScholesModel.simulateValue(t));
         REQUIRE(
-            S_t == 100.0 * exp(.15 * t)
+            S_t == 100.0 * exp(.15 * t / 365.0)
         );
-    }
-        
+    } 
+}
+
+TEST_CASE(" Black scholes expectancy check"){
+    BlackScholes blackScholesModel(100.0, .15, .2);
+    double sumLogS_2 = 0.0;
+    int nbSimulations = 1000000;
+    for(int n = 0; n < nbSimulations; ++n)
+        sumLogS_2 += log(blackScholesModel.simulateValue(2) / 100.0);
+    
+    auto error = sumLogS_2 / nbSimulations - (.15 - pow(.2 , 2) / 2) * (2 / 365.0);
+    auto stdDeviation = .2 / sqrt(nbSimulations);
+    REQUIRE(
+        abs(error) <= 3 * stdDeviation
+    );
     
 }

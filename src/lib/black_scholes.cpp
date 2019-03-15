@@ -7,7 +7,7 @@ double simulateWienerProcess(double W0, int daysFromStart){
     std::random_device rd{};
     std::mt19937 gen{rd()};
     
-    return std::normal_distribution<>{0, sqrt(daysFromStart)}(gen) / 365.0;
+    return std::normal_distribution<>{0, sqrt(daysFromStart / 365.0 )}(gen);
 }
 BlackScholes::BlackScholes(double S0_, double mu_, double sigma_)
     :S0(S0_),
@@ -17,7 +17,7 @@ BlackScholes::BlackScholes(double S0_, double mu_, double sigma_)
 BlackScholes::~BlackScholes(){};
 double BlackScholes::simulateValue(int daysFromStart) const {
     auto wienerValue = simulateWienerProcess(0.0, daysFromStart);
-    return(S0 * exp((mu - pow(sigma,2)) * daysFromStart + sigma * wienerValue));
+    return(S0 * exp((mu - pow(sigma,2) / 2) * daysFromStart / 365.0 + sigma * wienerValue));
 }
 
 Path<double> BlackScholes::generatePath(
