@@ -4,7 +4,8 @@ DummyModel::DummyModel(){};
 DummyModel::~DummyModel(){};
 double DummyModel::simulateValue(int daysFromStartDate) const{
         return 0.0;
-    }
+}
+
 Path<double> DummyModel::generatePath(
     ql::Date const& startDate,
     ql::Date const& endDate,
