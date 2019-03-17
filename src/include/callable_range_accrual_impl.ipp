@@ -72,6 +72,41 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
 template <typename Underlying_type>   
 CallableRangeAccrual<Underlying_type>::~CallableRangeAccrual(){}
 
+template <typename Underlying_type>   
+ql::Rate CallableRangeAccrual<Underlying_type>::getPayoff(){
+    return payoff;
+}
+
+template <typename Underlying_type>   
+ql::Rate CallableRangeAccrual<Underlying_type>::getFixedRate(){
+    return fixedRate;
+}
+
+template <typename Underlying_type>   
+Underlying_type CallableRangeAccrual<Underlying_type>::getRangeMax(){
+    return rangeMax;
+}
+
+template <typename Underlying_type>   
+Underlying_type CallableRangeAccrual<Underlying_type>::getRangeMin(){
+    return rangeMin;
+}
+
+template <typename Underlying_type>
+
+std::vector<ql::Date> CallableRangeAccrual<Underlying_type>::getTenor(std::string tenorType){
+    
+    if(tenorType.compare("fixed"))
+        return fixedLegTenor;
+    else if(tenorType.compare("variable"))
+        return varLegTenor;
+    else if(tenorType.compare("call"))
+        return callTenor;
+    else
+        std::cerr << tenorType << " is not a valid tenor type" << std::endl;
+    
+}
+
 template <typename TT>
 std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra){
     oStream << 

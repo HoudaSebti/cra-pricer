@@ -71,9 +71,16 @@ class CallableRangeAccrual{
             
         ~CallableRangeAccrual<Underlying_type>();
 
+        ql::Rate getPayoff();
+        ql::Rate getFixedRate();
+        Underlying_type getRangeMax();
+        Underlying_type getRangeMin();
+        std::vector<ql::Date> getTenor(std::string tenorType);
+
         template <typename TT>
         friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
 
+    private:
         //contract specifications
         ql::Rate payoff;
         ql::Rate fixedRate;
