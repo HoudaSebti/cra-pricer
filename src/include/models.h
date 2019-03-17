@@ -18,4 +18,5 @@ class Models{
             ql::Calendar const& calendar
         ) const {};
         virtual void calibrate(std::vector<std::istream> const& data){};
+        
 };

@@ -88,3 +88,16 @@ TEST_CASE("generate path with dummy model"){
         REQUIRE(path.getElement(i) == 0.0);
     }
 }
+
+TEST_CASE("generate path with black scholes model"){
+    BlackScholes bsModel(100.0, .15, .2);
+    
+    auto path(
+        bsModel.generatePath(
+            ql::Date(14, ql::January, 2017),
+            ql::Date(14, ql::February, 2019),
+            ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
+        )
+    );
+    
+}
