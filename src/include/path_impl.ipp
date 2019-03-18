@@ -1,5 +1,4 @@
 #pragma once
-#include<csv_handler.h>
 
 
 template <typename Underlying_type>
@@ -70,5 +69,3 @@ void saveToCsv(std::string const& pathName, std::vector<Path<TT>> const& paths){
 
     CSV_Handler(pathName).write(pathsElements);
 }
-
-

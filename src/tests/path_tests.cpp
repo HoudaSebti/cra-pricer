@@ -1,9 +1,10 @@
 
 #include <path.h>
+#include <path_impl.ipp>
 #include<black_scholes.h>
 
-
 #include<catch2/catch.hpp>
+
 
 TEST_CASE("testing saveTo csv file method"){
     BlackScholes bsModel(100.0, .15, .2);
@@ -15,5 +16,7 @@ TEST_CASE("testing saveTo csv file method"){
             ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
         )
     );
+    std::vector<Path<double>> paths{{path}};
+    saveToCsv("~/Workspace/Projects/houda/cra_pricer.csv", paths);
     
 }
