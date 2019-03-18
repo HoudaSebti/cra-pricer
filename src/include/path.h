@@ -3,6 +3,7 @@
 #include<definitions.h>
 #include <fstream>
 
+
 template <typename Underlying_type>
 class Path{
     public:
@@ -14,7 +15,7 @@ class Path{
         Path<Underlying_type>(Path const& other);
         Path<Underlying_type>(Path && other);
         ~Path<Underlying_type>();
-        std::vector<double> computeCashFlow(
+        double computeCashFlow(
             ql::Date const& startDate,
             ql::Date const& endDate,
             ql::Rate const& riskFreeRate,
@@ -29,7 +30,9 @@ class Path{
         void addElement(Underlying_type const& element);
         Underlying_type getElement(int const& position);
         int getSize();
-        std::basic_ofstream<char, std::char_traits<char>> saveToCsv(std::string pathName) const;
+        bool empty() const;
+        template<typename TT>
+        friend void saveToCsv(std::string const& pathName, std::vector<Path<TT>> const& paths);
     private:
         double computeFixedLeg(
             ql::Date const& startDate,

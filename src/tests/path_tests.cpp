@@ -15,5 +15,5 @@ TEST_CASE("testing saveTo csv file method"){
             ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
         )
     );
-    auto file = path.saveToCsv("~/Workspace/Projects/houda/cra_pricer/bsPath.csv");
+    
 }
