@@ -1,6 +1,5 @@
 #pragma once
 
-
 template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(){}
 
@@ -8,6 +7,7 @@ template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual const& other)
     : payoff (other.payoff),
     fixedRate(other.fixedRate),
+    notional(other.notional),
     rangeMax(other.rangeMax),
     rangeMin(other.rangeMin),
     fixedLegTenor(other.fixedLegTenor),
@@ -19,6 +19,7 @@ template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(CallableRangeAccrual && other)
     : payoff(std::move(other.payoff)),
     fixedRate(std::move(other.fixedRate)),
+    notional(std::move(other.notional)),
     rangeMax(std::move(other.rangeMax)),
     rangeMin(std::move(other.rangeMin)),
     fixedLegTenor(std::move(other.fixedLegTenor)),
@@ -36,11 +37,13 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
     int callIncrement,
     ql::Rate const& payoff_,
     ql::Rate const& fixedRate_,
+    double const& notional_,
     Underlying_type const& rangeMax_,
     Underlying_type const& rangeMin_
 )
     : payoff(payoff_),
     fixedRate(fixedRate_),
+    notional(notional_),
     rangeMax(rangeMax_),
     rangeMin(rangeMin_)
 {
@@ -73,40 +76,34 @@ template <typename Underlying_type>
 CallableRangeAccrual<Underlying_type>::~CallableRangeAccrual(){}
 
 template <typename Underlying_type>   
-ql::Rate CallableRangeAccrual<Underlying_type>::getPayoff(){
-    return payoff;
-}
-
-template <typename Underlying_type>   
-ql::Rate CallableRangeAccrual<Underlying_type>::getFixedRate(){
-    return fixedRate;
-}
-
-template <typename Underlying_type>   
-Underlying_type CallableRangeAccrual<Underlying_type>::getRangeMax(){
-    return rangeMax;
-}
-
-template <typename Underlying_type>   
-Underlying_type CallableRangeAccrual<Underlying_type>::getRangeMin(){
-    return rangeMin;
-}
-
-template <typename Underlying_type>
-
-std::vector<ql::Date> CallableRangeAccrual<Underlying_type>::getTenor(std::string tenorType){
-    
-    if(tenorType.compare("fixed"))
-        return fixedLegTenor;
-    else if(tenorType.compare("variable"))
-        return varLegTenor;
-    else if(tenorType.compare("call"))
-        return callTenor;
-    else
-        std::cerr << tenorType << " is not a valid tenor type" << std::endl;
+double CallableRangeAccrual<Underlying_type>::computeExerciseValue(
+    Path<Underlying_type> const& path,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    double const& discountRate
+){
     
 }
 
+template <typename Underlying_type> 
+double CallableRangeAccrual<Underlying_type>::computeFixedLeg(
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    double const& discountRate
+){
+    if(endDate < fixedLegTenor[1])
+        return 0.0;
+    else{
+        double fixedCoupon = 0.0;
+        double fixedIncrement = daysBetween(fixedLegTenor[0], fixedLegTenor[1]) / 365.0;
+        for(int i = 1; i < fixedLegTenor.size(); ++i){
+            auto fixedDate = fixedLegTenor[i];
+            if(fixedDate >= startDate && fixedDate <= endDate)
+                fixedCoupon += fixedRate * notional * fixedIncrement * exp(discountRate * daysBetween(fixedDate, endDate) / 365.0);
+        }
+        return fixedCoupon;
+    }
+}
 template <typename TT>
 std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra){
     oStream << 

@@ -17,6 +17,7 @@ int main() {
         6,
         ql::Rate(0.052),
         ql::Rate(0.03),
+        1000000.0,
         ql::Rate(0.04),
         ql::Rate(0.03)
     );

@@ -17,6 +17,7 @@ TEST_CASE("cra constructor for open start and end dates"){
         6,
         ql::Rate(0.052),
         ql::Rate(0.03),
+        1000000.0,
         ql::Rate(0.04),
         ql::Rate(0.03)
     );
@@ -61,27 +62,71 @@ TEST_CASE("cra constructor for open start and end dates"){
             6,
             ql::Rate(0.052),
             ql::Rate(0.03),
+            1000000.0,
             ql::Rate(0.04),
             ql::Rate(0.03)
         )
     );
  }
 
- TEST_CASE("cra constructor for closed end date"){
-      
+ TEST_CASE("cra fixed coupon test for fixedLegTenor[1] > endDate"){
+    
+    CallableRangeAccrual<ql::Rate> cra(
+        ql::Date(19, ql::December, 2016),
+        ql::Date(17, ql::December, 2018),
+        ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
+        3,
+        6,
+        6,
+        ql::Rate(0.052),
+        ql::Rate(0.03),
+        1000000.0,
+        ql::Rate(0.04),
+        ql::Rate(0.03)
+    );
 
-    REQUIRE_THROWS(
-        CallableRangeAccrual<ql::Rate>(
-            ql::Date(15, ql::January, 2016),
-            ql::Date(21, ql::January, 2018),
-            ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
-            3,
-            6,
-            6,
-            ql::Rate(0.052),
-            ql::Rate(0.03),
-            ql::Rate(0.04),
-            ql::Rate(0.03)
-        )
+    auto fixedCoupon = cra.computeFixedLeg(
+        ql::Date(17, ql::December, 2016),
+        ql::Date(17, ql::February, 2017),
+        5.75 / 100.0
+    );
+
+    REQUIRE(
+        fixedCoupon == 0.0
+    );
+ }
+
+TEST_CASE("cra fixed coupon test for fixedLegTenor[1] < endDate"){
+    
+    CallableRangeAccrual<ql::Rate> cra(
+        ql::Date(19, ql::December, 2016),
+        ql::Date(17, ql::December, 2018),
+        ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
+        3,
+        6,
+        6,
+        ql::Rate(0.052),
+        ql::Rate(0.03),
+        1000000.0,
+        ql::Rate(0.04),
+        ql::Rate(0.03)
+    );
+
+    std::cout << cra;
+
+    auto fixedCoupon = cra.computeFixedLeg(
+        ql::Date(19, ql::December, 2016),
+        ql::Date(17, ql::April, 2017),
+        5.75 / 100.0
+    );
+
+    auto expectedValue = 
+        .03 *
+        1000000.0 *
+        ql::daysBetween(ql::Date(19, ql::December, 2016), ql::Date(17, ql::March, 2017)) / 365.0 *
+        exp(5.75 / 100.0 * ql::daysBetween(ql::Date(17, ql::March, 2017), ql::Date(17, ql::April, 2017)) / 365.0);
+
+    REQUIRE(
+        fixedCoupon == expectedValue
     );
  }

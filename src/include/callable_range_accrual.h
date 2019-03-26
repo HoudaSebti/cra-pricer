@@ -1,7 +1,8 @@
 #pragma once
 
 #include <definitions.h>
-
+#include <path.h>
+#include <path_impl.ipp>
 
 bool checkUpdate(
     ql::Date const& lhsDate,
@@ -65,25 +66,41 @@ class CallableRangeAccrual{
             int callIncrement,
             ql::Rate const& payoff_,
             ql::Rate const& fixedRate_,
+            double const& notional_,
             Underlying_type const& rangeMax_,
             Underlying_type const& rangeMin_
         );
             
         ~CallableRangeAccrual<Underlying_type>();
 
-        ql::Rate getPayoff();
-        ql::Rate getFixedRate();
-        Underlying_type getRangeMax();
-        Underlying_type getRangeMin();
-        std::vector<ql::Date> getTenor(std::string tenorType);
+        double computeExerciseValue(
+            Path<Underlying_type> const& path,
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            double const& discountRate
+        );
 
+        double computeFixedLeg(
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            double const& discountRate
+        );
+        
+        double computeVariableLeg(
+            Path<Underlying_type> const& path,
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            double const& discountRate
+        );
         template <typename TT>
         friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
 
-    private:
+    private:  
+
         //contract specifications
         ql::Rate payoff;
         ql::Rate fixedRate;
+        double notional;
         Underlying_type rangeMax;
         Underlying_type rangeMin;
 
