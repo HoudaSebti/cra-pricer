@@ -23,19 +23,6 @@ template <typename Underlying_type>
 Path<Underlying_type>::~Path(){};
 
 template <typename Underlying_type>
-double Path<Underlying_type>::computeCashFlow(
-    ql::Date const& startDate,
-    ql::Date const& endDate,
-    ql::Rate const& riskFreeRate,
-    ql::Rate const& fixedRate,
-    ql::Rate const& payout,
-    Underlying_type const& rangeMax,
-    Underlying_type const& rangeMin
-){
-    return 0.0;
-}
-
-template <typename Underlying_type>
 void Path<Underlying_type>::addElement(Underlying_type const& element){
     elements.push_back(element);
 }
