@@ -104,6 +104,48 @@ double CallableRangeAccrual<Underlying_type>::computeFixedLeg(
         return fixedCoupon;
     }
 }
+
+template <typename Underlying_type> 
+double CallableRangeAccrual<Underlying_type>::computeVariableLeg(
+    Path<Underlying_type> const& path,
+    ql::Calendar const& calendar,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    double const& discountRate
+){
+    int startIndex = calendar.businessDaysBetween(varLegTenor[0], startDate);
+    int endIndex   = calendar.businessDaysBetween(varLegTenor[0], endDate);
+
+    std::cout << "start index is: " << startIndex << std::endl;
+    std::cout << "end index is: " << endIndex     << std::endl;
+
+    int periodBusinessDays = calendar.businessDaysBetween(startDate, endDate);
+    int variableDelta = ql::daysBetween(varLegTenor[0], varLegTenor[1]) / 365.0;
+
+    std::vector<double> inRangeRatios;
+    std::transform(
+        varLegTenor.begin() + 1,
+        varLegTenor.end(),
+        std::back_inserter(inRangeRatios),
+        [](ql::Date varLegDate) -> double {
+            double inRangeRatio = 0;
+            double discountFactor = 
+                (varLegDate > endDate) ? 1.0 : exp(discountRate * daysBetween(varLegDate, endDate));
+            for(int j = startIndex; j <= endIndex; ++i){
+                if(path[i] >= rangeMin && path[i] <= rangeMax)
+                    inRangeRatio += (1.0 / periodBusinessDays);     
+            }
+            
+            return 
+                payoff *
+                inRangeRatio *
+                discountFactor *
+                variableDelta;
+        }
+    );
+    return std::accumulate(inRangeRatios.begin(), inRangeRatios.end(), 0.0);
+}
+
 template <typename TT>
 std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra){
     oStream << 

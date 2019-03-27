@@ -85,9 +85,10 @@ class CallableRangeAccrual{
             ql::Date const& endDate,
             double const& discountRate
         );
-        
+
         double computeVariableLeg(
             Path<Underlying_type> const& path,
+            ql::Calendar const& calendar,
             ql::Date const& startDate,
             ql::Date const& endDate,
             double const& discountRate
