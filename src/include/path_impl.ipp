@@ -42,6 +42,11 @@ bool Path<Underlying_type>::empty() const{
     return elements.empty();
 }
 
+template <typename Underlying_type>
+void Path<Underlying_type>::setStoppingTime(ql::Date const& newStoppingTime){
+    stoppingTime(newStoppingTime);
+}
+
 template<typename TT>
 void saveToCsv(std::string const& pathName, std::vector<Path<TT>> const& paths){
     std::vector<std::vector<TT>> pathsElements(paths.size());

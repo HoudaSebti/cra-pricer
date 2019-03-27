@@ -21,11 +21,13 @@ class Path{
         Underlying_type getElement(int const& position);
         int getSize();
         bool empty() const;
+        void setStoppingTime(ql::Date const& newStoppingTime);
         template<typename TT>
         friend void saveToCsv(std::string const& pathName, std::vector<Path<TT>> const& paths);
     private:
 
         std::vector<Underlying_type> elements;
+        ql::Date stoppingTime;
 };
 
 #include <path_impl.ipp>
