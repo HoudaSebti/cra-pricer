@@ -4,6 +4,7 @@
 
 #include<callable_range_accrual.h>
 #include <callable_range_accrual_impl.ipp>
+#include <dummy_model.h>
 
 
 TEST_CASE("cra constructor for open start and end dates"){
@@ -130,3 +131,39 @@ TEST_CASE("cra fixed coupon test for fixedLegTenor[1] < endDate"){
         fixedCoupon == expectedValue
     );
  }
+
+TEST_CASE("variable leg test"){
+    CallableRangeAccrual<ql::Rate> cra(
+        ql::Date(19, ql::December, 2016),
+        ql::Date(17, ql::December, 2018),
+        ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
+        1,
+        1,
+        1,
+        ql::Rate(0.052),
+        ql::Rate(0.03),
+        1000000.0,
+        ql::Rate(0.04),
+        ql::Rate(0.03)
+    );
+    DummyModel dummyModel = DummyModel();
+    
+    auto path(
+        dummyModel.generatePath(
+            ql::Date(19, ql::December, 2016),
+            ql::Date(25, ql::January, 2017),
+            ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
+        )
+    );
+    auto variableCoupon = cra.computeVariableLeg(
+        path,
+        ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex)),
+        ql::Date(19, ql::December, 2016),
+        ql::Date(20, ql::January, 2017),
+        5.75 / 100.0
+    );
+
+    REQUIRE(
+        variableCoupon == 0.0
+    );
+}
