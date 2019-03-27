@@ -1,5 +1,8 @@
 # Ignore file
 
+# vscode
+.vscode
+
 # Build file
 build
 
