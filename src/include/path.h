@@ -18,7 +18,7 @@ class Path{
         Path<Underlying_type>(Path && other);
         ~Path<Underlying_type>();
         void addElement(Underlying_type const& element);
-        Underlying_type getElement(int const& position);
+        Underlying_type getElement(int position) const;
         int getSize();
         bool empty() const;
         void setStoppingTime(ql::Date const& newStoppingTime);

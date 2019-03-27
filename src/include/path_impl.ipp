@@ -28,7 +28,7 @@ void Path<Underlying_type>::addElement(Underlying_type const& element){
 }
 
 template <typename Underlying_type>
-Underlying_type Path<Underlying_type>::getElement(int const& position){
+Underlying_type Path<Underlying_type>::getElement(int position) const{
     return elements[position];
 }
 
