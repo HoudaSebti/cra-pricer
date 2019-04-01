@@ -151,7 +151,7 @@ TEST_CASE("variable leg test"){
     auto path(
         dummyModel.generatePath(
             ql::Date(19, ql::December, 2016),
-            ql::Date(25, ql::January, 2017),
+            ql::Date(17, ql::December, 2018),
             ql::Germany(ql::Germany::Market(ql::Germany::Market::Eurex))
         )
     );
