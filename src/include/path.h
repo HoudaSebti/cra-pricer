@@ -22,6 +22,7 @@ class Path{
         int getSize();
         bool empty() const;
         void setStoppingTime(ql::Date const& newStoppingTime);
+        ql::Date getStoppingTime() const;
         template<typename TT>
         friend void saveToCsv(std::string const& pathName, std::vector<Path<TT>> const& paths);
     private:
