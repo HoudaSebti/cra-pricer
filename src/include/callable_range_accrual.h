@@ -72,14 +72,7 @@ class CallableRangeAccrual{
         );
             
         ~CallableRangeAccrual<Underlying_type>();
-
-        double computeExerciseValue(
-            Path<Underlying_type> const& path,
-            ql::Date const& startDate,
-            ql::Date const& endDate,
-            double const& discountRate
-        );
-
+        
         double computeFixedLeg(
             ql::Date const& startDate,
             ql::Date const& endDate,
@@ -93,6 +86,25 @@ class CallableRangeAccrual{
             ql::Date const& endDate,
             double const& discountRate
         );
+        
+        double computeExerciseValue(
+            Path<Underlying_type> const& path,
+            ql::Calendar const& calendar,
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            double const& discountRate
+        );
+
+        double computeHoldValue(
+            Path<Underlying_type> & path,
+            ql::Calendar const& calendar,
+            ql::Date const& startDate,
+            ql::Date const& endDate,
+            double const& discountRate
+        );
+
+        bool cancelContract(Path<Underlying_type> const& path, ql::Date const& date) const;
+
         template <typename TT>
         friend std::ostream& operator<<(std::ostream& oStream, CallableRangeAccrual<TT> const& cra);
 

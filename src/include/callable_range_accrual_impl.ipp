@@ -75,16 +75,6 @@ CallableRangeAccrual<Underlying_type>::CallableRangeAccrual(
 template <typename Underlying_type>   
 CallableRangeAccrual<Underlying_type>::~CallableRangeAccrual(){}
 
-template <typename Underlying_type>   
-double CallableRangeAccrual<Underlying_type>::computeExerciseValue(
-    Path<Underlying_type> const& path,
-    ql::Date const& startDate,
-    ql::Date const& endDate,
-    double const& discountRate
-){
-    
-}
-
 template <typename Underlying_type> 
 double CallableRangeAccrual<Underlying_type>::computeFixedLeg(
     ql::Date const& startDate,
@@ -113,8 +103,6 @@ double CallableRangeAccrual<Underlying_type>::computeVariableLeg(
     ql::Date const& endDate,
     double const& discountRate
 ){
-    
-
     std::vector<double> inRangeRatios;
     std::transform(
         varLegTenor.begin() + 1,
@@ -135,6 +123,7 @@ double CallableRangeAccrual<Underlying_type>::computeVariableLeg(
             }
             
             return 
+                notional *
                 payoff *
                 inRangeRatio *
                 discountFactor *
@@ -142,6 +131,50 @@ double CallableRangeAccrual<Underlying_type>::computeVariableLeg(
         }
     );
     return std::accumulate(inRangeRatios.begin(), inRangeRatios.end(), 0.0);
+}
+
+template <typename Underlying_type>   
+double CallableRangeAccrual<Underlying_type>::computeExerciseValue(
+    Path<Underlying_type> const& path,
+    ql::Calendar const& calendar,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    double const& discountRate
+){
+    return
+        computeVariableLeg(
+            path,
+            calendar,
+            startDate,
+            endDate,
+            discountRate
+        ) - 
+        computeFixedLeg(
+            startDate,
+            endDate,
+            discountRate
+        );
+}
+
+template <typename Underlying_type>
+double CallableRangeAccrual<Underlying_type>::computeHoldValue(
+    Path<Underlying_type> & path,
+    ql::Calendar const& calendar,
+    ql::Date const& startDate,
+    ql::Date const& endDate,
+    double const& discountRate
+){
+    if(path.setStoppint)
+    path.setStoppingTime(* fixedLegTenor.end());
+
+}
+
+template <typename Underlying_type>
+bool CallableRangeAccrual<Underlying_type>::cancelContract(
+    Path<Underlying_type> const& path,
+    ql::Date const& date
+) const{
+    return true;
 }
 
 template <typename TT>
